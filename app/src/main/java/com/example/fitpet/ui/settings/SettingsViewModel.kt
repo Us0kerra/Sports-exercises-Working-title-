@@ -1,13 +1,32 @@
 package com.example.fitpet.ui.settings
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.content.Context
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.fitpet.data.model.UserSettings
+import com.example.fitpet.data.repository.SettingsRepository
+import kotlinx.coroutines.launch
 
-class SettingsViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is settings Fragment"
+class SettingsViewModel(
+    private val context: Context
+) : ViewModel() {
+    var settings by mutableStateOf(UserSettings())
+        private set
+    init {
+        viewModelScope.launch {
+            SettingsRepository.load(context).collect {
+                settings = it
+            }
+        }
     }
-    val text: LiveData<String> = _text
+    fun update(update: UserSettings) {
+        settings = update
+        viewModelScope.launch {
+            SettingsRepository.save(context, update)
+        }
+    }
 }
