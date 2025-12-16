@@ -8,25 +8,30 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fitpet.data.model.UserSettings
 import com.example.fitpet.data.repository.SettingsRepository
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 
-class SettingsViewModel(
-    private val context: Context
-) : ViewModel() {
+class SettingsViewModel(private val repository: SettingsRepository) : ViewModel() {
+
     var settings by mutableStateOf(UserSettings())
         private set
+    val settingsFlow = repository.settingsFlow
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
+
     init {
         viewModelScope.launch {
-            SettingsRepository.load(context).collect {
-                settings = it
+            repository.settingsFlow.collect { loadedSettings ->
+                settings = loadedSettings
             }
         }
     }
-    fun update(update: UserSettings) {
-        settings = update
+
+    fun updateSettings  (newSettings: UserSettings) {
+        settings = newSettings
         viewModelScope.launch {
-            SettingsRepository.save(context, update)
+            repository.updateSettings(newSettings)
         }
     }
 }

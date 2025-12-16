@@ -7,37 +7,42 @@ import com.example.fitpet.data.model.Gender
 import com.example.fitpet.data.model.UserSettings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import androidx.datastore.preferences.core.edit
+// Делегат для DataStore
+private val Context.settingsDataStore by preferencesDataStore(name = "settings")
 
-private val Context.dataStore by preferencesDataStore(
-    name = "fitness_pet"
-)
+class SettingsRepository(private val context: Context) {
 
-object SettingsRepository {
-    private val NOTIFICATIONS = booleanPreferencesKey("notifications")
-    private val SOUND = booleanPreferencesKey("sound")
-    private val WEIGHT = intPreferencesKey("weight")
-    private val HEIGHT = intPreferencesKey("height")
-    private val GENDER = stringPreferencesKey("gender")
-    private val TIME = stringPreferencesKey("time")
-    suspend fun save(context: Context, settings: UserSettings) {
-        context.dataStore.edit {
-            it[NOTIFICATIONS] = settings.notifications
-            it[SOUND] = settings.sound
-            it[WEIGHT] = settings.weight
-            it[HEIGHT] = settings.height
-            it[GENDER] = settings.gender.name
-            it[TIME] = settings.notificationTime
-        }
-    }
-    fun load(context: Context): Flow<UserSettings> =
-        context.dataStore.data.map {
+    private val NOTIFICATIONS_KEY = booleanPreferencesKey("notifications")
+    private val SOUND_KEY = booleanPreferencesKey("sound")
+    private val DARK_MODE_KEY = booleanPreferencesKey("darkMode")
+    private val WEIGHT_KEY = intPreferencesKey("weight")
+    private val HEIGHT_KEY = intPreferencesKey("height")
+    private val GENDER_KEY = stringPreferencesKey("gender")
+    private val NOTIFICATION_TIME_KEY = stringPreferencesKey("notificationTime")
+
+    val settingsFlow: Flow<UserSettings> = context.settingsDataStore.data
+        .map { prefs ->
             UserSettings(
-                notifications = it[NOTIFICATIONS] ?: true,
-                sound = it[SOUND] ?: true,
-                weight = it[WEIGHT] ?: 70,
-                height = it[HEIGHT] ?: 175,
-                gender = Gender.valueOf(it[GENDER] ?: "MALE"),
-                notificationTime = it[TIME] ?: "09:00"
+                notifications = prefs[NOTIFICATIONS_KEY] ?: true,
+                sound = prefs[SOUND_KEY] ?: true,
+                darkMode = prefs[DARK_MODE_KEY] ?: false,
+                weight = prefs[WEIGHT_KEY] ?: 70,
+                height = prefs[HEIGHT_KEY] ?: 175,
+                gender = if (prefs[GENDER_KEY] ?: "male" == "male") Gender.MALE else Gender.FEMALE,
+                notificationTime = prefs[NOTIFICATION_TIME_KEY] ?: "09:00"
             )
         }
+
+    suspend fun updateSettings(settings: UserSettings) {
+        context.settingsDataStore.edit { prefs ->
+            prefs[NOTIFICATIONS_KEY] = settings.notifications
+            prefs[SOUND_KEY] = settings.sound
+            prefs[DARK_MODE_KEY] = settings.darkMode
+            prefs[WEIGHT_KEY] = settings.weight
+            prefs[HEIGHT_KEY] = settings.height
+            prefs[GENDER_KEY] = if (settings.gender == Gender.MALE) "male" else "female"
+            prefs[NOTIFICATION_TIME_KEY] = settings.notificationTime
+        }
+    }
 }
