@@ -13,9 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -115,6 +112,24 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
                             }
                         )
                     }
+                }
+            }
+
+            // Тёмная тема
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F0F0))
+            ) {
+                Column(modifier = Modifier.padding(12.dp)) {
+                    SettingSwitch(
+                        title = "Тёмная тема",
+                        checked = currentSettings.darkMode,
+                        onCheckedChange = {
+                            viewModel.updateSettings(currentSettings.copy(darkMode = it))
+                        }
+                    )
                 }
             }
 

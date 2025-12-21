@@ -11,7 +11,7 @@ import androidx.datastore.preferences.core.edit
 // Делегат для DataStore
 private val Context.settingsDataStore by preferencesDataStore(name = "settings")
 
-class SettingsRepository(private val context: Context) {
+class SettingsRepository(val context: Context) {
 
     private val NOTIFICATIONS_KEY = booleanPreferencesKey("notifications")
     private val SOUND_KEY = booleanPreferencesKey("sound")
