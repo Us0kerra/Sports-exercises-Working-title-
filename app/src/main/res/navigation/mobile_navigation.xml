@@ -12,16 +12,16 @@
         tools:layout="@layout/fragment_pet" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.fitpet.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_statistics"
+        android:name="com.example.fitpet.ui.statistics.StatisticsFragment"
+        android:label="@string/title_warmups"
+        tools:layout="@layout/fragment_statistics" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.fitpet.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_warmups"
+        android:name="com.example.fitpet.ui.warmups.WarmupsFragment"
+        android:label="@string/title_warmups"
+        tools:layout="@layout/fragment_warmups" />
 
     <fragment
         android:id="@+id/navigation_achievements"

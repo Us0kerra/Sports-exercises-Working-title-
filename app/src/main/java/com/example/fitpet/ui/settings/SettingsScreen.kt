@@ -24,8 +24,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.Alignment
 import com.example.fitpet.ui.settings.components.*
 
-
-
 @Composable
 fun SettingsScreen(viewModel: SettingsViewModel) {
     val settings by viewModel.settingsFlow.collectAsState(initial = null)
@@ -48,7 +46,7 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // ===== Заголовок =====
-            Spacer(Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Box(
                 modifier = Modifier
                     .size(96.dp)

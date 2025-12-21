@@ -5,38 +5,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.fitpet.data.repository.SettingsRepository
 import com.example.fitpet.databinding.FragmentAchievementsBinding
+import com.example.fitpet.ui.settings.SettingsScreen
+import com.example.fitpet.ui.settings.SettingsViewModel
 
 class AchievementsFragment : Fragment() {
 
-    private var _binding: FragmentAchievementsBinding? = null
+    private lateinit var viewModel: AchievementsViewModel
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val achievementsViewModel =
-            ViewModelProvider(this).get(AchievementsViewModel::class.java)
+        // Создаём репозиторий, передаём контекст
+//        val repository = SettingsRepository(requireContext())
 
-        _binding = FragmentAchievementsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textAchievements
-        achievementsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
+        // Создаём ViewModel, передаём репозиторий
+//        viewModel = SettingsViewModel(repository)
+        viewModel = AchievementsViewModel()
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                AchievementsScreen(viewModel)
+            }
+        }
     }
 }

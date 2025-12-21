@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">FitPet</string>
     <string name="title_pet">Питомец</string>
-    <string name="title_dashboard">Статистика</string>
-    <string name="title_notifications">Тренировки</string>
+    <string name="title_statistics">Статистика</string>
+    <string name="title_warmups">Тренировки</string>
     <string name="title_achievements">Достижения</string>
     <string name="title_settings">Настройки</string>
 </resources>
