@@ -18,15 +18,23 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.fitpet.ui.statistics.components.Calendar
+import com.example.fitpet.ui.statistics.components.StatsRow
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun StatisticsScreen(viewModel: StatisticsViewModel) {
+fun StatisticsScreen(
+    statisticsViewModel: StatisticsViewModel = viewModel()
+) {
+    val state by statisticsViewModel.state.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -36,200 +44,33 @@ fun StatisticsScreen(viewModel: StatisticsViewModel) {
     ) {
 
         Text(
-            text = "Статистика сегодня", //TODO Если дата не сегодня -> Статистика ДАТА
-            fontSize = 18.sp,
-            color = Color(0xFF9810FA)
+            text = "Статистика сегодня",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF7C3AED)
         )
-
-        Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             text = "Ваш ежедневный прогресс",
             fontSize = 14.sp,
-            color = Color(0xFF6B7280)
+            color = Color.Gray
         )
 
-        //ккал мин кол-во тренировок
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp)
-        ) {
-            //TODO: Иконка огня
-            Text(
-                text = "320", //TODO: Сделать хранилище откуда мы вытягиваеем значение
-                fontSize = 14.sp,
-                color = Color(0xFF9810FA)
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "ккал",
-                fontSize = 14.sp,
-                color = Color.Black
-            )
-        }
+        Spacer(Modifier.height(16.dp))
 
-        Spacer(modifier = Modifier.width(8.dp))
+        StatsRow(state)
 
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp)
-        ) {
-            //ToDO: Иконка часов
-            Text(
-                text = "45", //TODO:Подтягивать из хранилища
-                fontSize = 14.sp,
-                color = Color(0xFF6B7280) //TODO: Какой-то бардовый
+        Spacer(Modifier.height(24.dp))
 
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "Минут",
-                fontSize = 14.sp,
-                color = Color.Black
-            )
-        }
-        Spacer(modifier = Modifier.width(8.dp))
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp)
-        ) {
-                //TODO: Иконка гантели
-            Text(
-                text = "3", //TODO: Хранилище
-                fontSize = 14.sp,
-                color = Color(0xFF6B7280)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "Разминок",
-                fontSize = 14.sp,
-                color = Color.Black
-            )
-        }
+        Calendar(
+            completedDays = state.completedDays,
+            selectedDay = state.selectedDay,
+            streak = state.streak,
+            onDayClick = statisticsViewModel::onDaySelected
 
-
-
-        // Календарь прогресса
-
-        Text(
-            text = "Календарь прогресса",
-            fontSize = 18.sp,
-            color = Color(0xFF9810FA)
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
 
-        Text(
-            text = "Отслеживайте свой путь тренировок",
-            fontSize = 14.sp,
-            color = Color(0xFF6B7280)
-        )
-
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp)
-        ){
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-            ) {
-                Icon(
-                    imageVector = Icons.Default.CheckCircle,
-                    contentDescription = null,
-                    tint = Color.White,
-                    modifier = Modifier.size(16.dp)
-                )
-
-                Spacer(modifier = Modifier.width(4.dp))
-
-                Text(
-                    text = "Этот месяц",
-                    fontSize = 14.sp,
-                    color = Color(0xFF6B7280)
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-
-                Text(
-                    text = "{n} день/дня/дней",
-                    fontSize = 14.sp,
-                    color = Color(0xFF9810FA)
-                )
-            }
-        }
-
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp)
-        ){
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add, // TODO график вверх
-                    contentDescription = null,
-                    tint = Color.White,
-                    modifier = Modifier.size(16.dp)
-                )
-
-                Spacer(modifier = Modifier.width(4.dp))
-
-                Text(
-                    text = "Текущая серия",
-                    fontSize = 14.sp,
-                    color = Color(0xFF6B7280)
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = "{n} день/дня/дней",
-                    fontSize = 14.sp,
-                    color = Color(0xFF9810FA)
-                )
-            }
-        }
-
-
-
-        Spacer(modifier = Modifier.width(8.dp))
-
-        Card {  }
-
-        // Интерактивный календарь
-
-        //TODO:Календарик
-
-        Calendar()
-
-        //Легенда
-
-        //#TODO:Круглешок рядом с текстом
-        Text(
-            text = "Выполнено",
-            fontSize = 14.sp,
-            color = Color.Black
-        )
-
-        Spacer(modifier = Modifier.width(6.dp))
-
-        Text(
-            text = "Сегодня",
-            fontSize = 14.sp,
-            color = Color.Black
-        )
-
-        Spacer(modifier = Modifier.width(6.dp))
-
-        Text(
-            text = "Выбрано",
-            fontSize = 14.sp,
-            color = Color(0xFF6B7280)
-        )
-
+        Spacer(Modifier.height(64.dp)) // под NavBar
     }
 }

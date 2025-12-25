@@ -45,7 +45,6 @@ fun TitleRow(achievement: Achievement, onClaimReward: () -> Unit) {
                 )
                 if (achievement.status != AchievementStatus.NOT_DONE) {
                     Spacer(Modifier.width(8.dp))
-                    StatusBadge(achievement.status)
                 }
 
 
@@ -53,12 +52,12 @@ fun TitleRow(achievement: Achievement, onClaimReward: () -> Unit) {
                     Spacer(Modifier.height(12.dp))
                     Button(
                         onClick = onClaimReward,
-                        modifier = Modifier.align(Alignment.CenterVertically)
+                        modifier = Modifier.align(Alignment.Top)
                     ) {
                         Text("Забрать")
                     }
 
-}
+                }
                 if (
                     achievement.status == AchievementStatus.DONE_NOT_CLAIMED
                 ) {
