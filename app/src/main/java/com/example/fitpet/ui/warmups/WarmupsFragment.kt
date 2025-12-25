@@ -15,10 +15,6 @@ class WarmupsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Создаём репозиторий, передаём контекст
-        val repository = WarmupRepository()
-
-        // Создаём ViewModel, передаём репозиторий
         viewModel = WarmupsViewModel()
     }
 

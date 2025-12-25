@@ -1,13 +1,29 @@
 package com.example.fitpet.ui.achievements
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.fitpet.data.achievements.Achievement
+import com.example.fitpet.data.achievements.AchievementStatus
+import com.example.fitpet.data.achievements.AchievementsRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class AchievementsViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is achievements Fragment"
+    private val repository = AchievementsRepository()
+
+    private val _achievements = MutableStateFlow<List<Achievement>>(emptyList())
+    val achievements: StateFlow<List<Achievement>> = _achievements.asStateFlow()
+
+    init {
+        _achievements.value = repository.getAchievements()
     }
-    val text: LiveData<String> = _text
+
+    fun claimReward(id: Int) {
+        _achievements.value = _achievements.value.map { ach ->
+            if (ach.id == id && ach.status == AchievementStatus.DONE_NOT_CLAIMED) {
+                ach.copy(status = AchievementStatus.DONE_CLAIMED)
+            } else ach
+        }
+    }
 }
