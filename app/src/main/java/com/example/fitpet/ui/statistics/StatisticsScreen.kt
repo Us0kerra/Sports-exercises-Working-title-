@@ -12,6 +12,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -134,7 +135,7 @@ fun StatisticsScreen(viewModel: StatisticsViewModel) {
                     .padding(16.dp),
             ) {
                 Icon(
-                    ImageVector = Icons.Default.CheckCircle,
+                    imageVector = Icons.Default.CheckCircle,
                     contentDescription = null,
                     tint = Color.White,
                     modifier = Modifier.size(16.dp)
@@ -150,9 +151,10 @@ fun StatisticsScreen(viewModel: StatisticsViewModel) {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
+
                 Text(
                     text = "{n} день/дня/дней",
-                    fontsize = 14.sp,
+                    fontSize = 14.sp,
                     color = Color(0xFF9810FA)
                 )
             }
@@ -168,7 +170,7 @@ fun StatisticsScreen(viewModel: StatisticsViewModel) {
                     .padding(16.dp),
             ) {
                 Icon(
-                    ImageVector = Icons.Default, // TODO график вверх
+                    imageVector = Icons.Default.Add, // TODO график вверх
                     contentDescription = null,
                     tint = Color.White,
                     modifier = Modifier.size(16.dp)
@@ -186,7 +188,7 @@ fun StatisticsScreen(viewModel: StatisticsViewModel) {
 
                 Text(
                     text = "{n} день/дня/дней",
-                    fontsize = 14.sp,
+                    fontSize = 14.sp,
                     color = Color(0xFF9810FA)
                 )
             }

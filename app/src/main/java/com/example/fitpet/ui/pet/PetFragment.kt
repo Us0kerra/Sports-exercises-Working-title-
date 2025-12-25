@@ -5,38 +5,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.fitpet.data.repository.SettingsRepository
 import com.example.fitpet.databinding.FragmentPetBinding
+import com.example.fitpet.ui.settings.SettingsScreen
+import com.example.fitpet.ui.settings.SettingsViewModel
 
 class PetFragment : Fragment() {
 
-    private var _binding: FragmentPetBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var viewModel: PetViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val petViewModel =
-            ViewModelProvider(this).get(PetViewModel::class.java)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        _binding = FragmentPetBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        // Создаём репозиторий, передаём контекст
+//        val repository = SettingsRepository(requireContext())
 
-        val textView: TextView = binding.textPet
-        petViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
+        // Создаём ViewModel, передаём репозиторий
+        viewModel = PetViewModel()
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                PetScreen(viewModel)
+            }
+        }
     }
 }

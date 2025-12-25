@@ -53,7 +53,7 @@ fun TitleRow(achievement: Achievement, onClaimReward: () -> Unit) {
                     Spacer(Modifier.height(12.dp))
                     Button(
                         onClick = onClaimReward,
-                        modifier = Modifier.align(Alignment.EndHorizontally)
+                        modifier = Modifier.align(Alignment.CenterVertically)
                     ) {
                         Text("Забрать")
                     }
