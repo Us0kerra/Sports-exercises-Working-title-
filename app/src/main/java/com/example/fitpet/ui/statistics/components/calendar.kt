@@ -42,8 +42,8 @@ fun Calendar(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-//        InfoChip("Этот месяц", "6 дней", Color(0xFFF3E8FF))
-//        InfoChip("Текущая серия", "$streak дня", Color(0xFFFCE7F3))
+        InfoChip("Этот месяц", "6 дней", Color(0xFFF3E8FF))
+        InfoChip("Текущая серия", "$streak дня", Color(0xFFFCE7F3))
     }
 
     Spacer(Modifier.height(16.dp))

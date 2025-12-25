@@ -19,6 +19,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -29,12 +32,17 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.fitpet.ui.statistics.components.Calendar
 import com.example.fitpet.ui.statistics.components.StatsRow
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.fitpet.ui.statistics.components.CalendarHeader
+import java.time.YearMonth
+import java.time.format.TextStyle
+import java.util.Locale
 
 @Composable
 fun StatisticsScreen(
     statisticsViewModel: StatisticsViewModel = viewModel()
 ) {
     val state by statisticsViewModel.state.collectAsStateWithLifecycle()
+    var currentMonth by remember { mutableStateOf(YearMonth.now())}
 
     Column(
         modifier = Modifier
@@ -62,6 +70,7 @@ fun StatisticsScreen(
 
         Spacer(Modifier.height(24.dp))
 
+        CalendarHeader(currentMonth, onPrevMonth = {currentMonth = currentMonth.minusMonths(1)}, onNextMonth = {currentMonth = currentMonth.plusMonths(1)})
         Calendar(
             completedDays = state.completedDays,
             selectedDay = state.selectedDay,
