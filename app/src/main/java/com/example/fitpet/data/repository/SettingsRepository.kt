@@ -19,10 +19,16 @@ class SettingsRepository(val context: Context) {
     private val WEIGHT_KEY = intPreferencesKey("weight")
     private val HEIGHT_KEY = intPreferencesKey("height")
     private val GENDER_KEY = stringPreferencesKey("gender")
-    private val NOTIFICATION_TIME_KEY = stringPreferencesKey("notificationTime")
+    private val NOTIFICATION_TIMES_KEY = stringPreferencesKey("notificationTimes")
 
     val settingsFlow: Flow<UserSettings> = context.settingsDataStore.data
         .map { prefs ->
+            val timesString = prefs[NOTIFICATION_TIMES_KEY] ?: "09:00"
+            val notificationTimes = if (timesString.isNotEmpty()) {
+                timesString.split(",").filter { it.isNotBlank() }
+            } else {
+                listOf("09:00")
+            }
             UserSettings(
                 notifications = prefs[NOTIFICATIONS_KEY] ?: true,
                 sound = prefs[SOUND_KEY] ?: true,
@@ -30,7 +36,7 @@ class SettingsRepository(val context: Context) {
                 weight = prefs[WEIGHT_KEY] ?: 70,
                 height = prefs[HEIGHT_KEY] ?: 175,
                 gender = if (prefs[GENDER_KEY] ?: "male" == "male") Gender.MALE else Gender.FEMALE,
-                notificationTime = prefs[NOTIFICATION_TIME_KEY] ?: "09:00"
+                notificationTimes = notificationTimes
             )
         }
 
@@ -42,7 +48,7 @@ class SettingsRepository(val context: Context) {
             prefs[WEIGHT_KEY] = settings.weight
             prefs[HEIGHT_KEY] = settings.height
             prefs[GENDER_KEY] = if (settings.gender == Gender.MALE) "male" else "female"
-            prefs[NOTIFICATION_TIME_KEY] = settings.notificationTime
+            prefs[NOTIFICATION_TIMES_KEY] = settings.notificationTimes.joinToString(",")
         }
     }
 }

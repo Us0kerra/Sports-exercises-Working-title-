@@ -7,5 +7,5 @@ data class UserSettings(
     val weight: Int = 70,
     val height: Int = 175,
     val gender: Gender = Gender.MALE,
-    val notificationTime: String = "09:00"
+    val notificationTimes: List<String> = listOf("09:00")
 )

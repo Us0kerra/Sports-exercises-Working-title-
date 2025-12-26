@@ -1,5 +1,6 @@
 package com.example.fitpet.notifications
 
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -15,24 +16,25 @@ class DailyReminderReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         showNotification(context)
+        
+        // Планируем следующее уведомление на завтра
+        val hour = intent.getIntExtra(NotificationScheduler.EXTRA_HOUR, 9)
+        val minute = intent.getIntExtra(NotificationScheduler.EXTRA_MINUTE, 0)
+        val index = intent.getIntExtra(NotificationScheduler.EXTRA_INDEX, 0)
+        
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        NotificationScheduler.scheduleSingleReminder(context, alarmManager, hour, minute, index)
     }
 
     private fun showNotification(context: Context) {
-        val channelId = "daily_reminder_channel"
+        val channelId = NotificationScheduler.CHANNEL_ID
         val notificationId = 1001
 
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        // Создаём канал для Android 8+
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId,
-                context.getString(R.string.app_name),
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            notificationManager.createNotificationChannel(channel)
-        }
+        // Создаём канал для Android 8+ (на случай если он еще не создан)
+        NotificationScheduler.createNotificationChannel(context)
 
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

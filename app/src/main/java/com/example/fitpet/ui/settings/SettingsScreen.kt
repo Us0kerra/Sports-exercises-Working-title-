@@ -110,12 +110,46 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
                 ) {
                     Column(modifier = Modifier.padding(12.dp)) {
                         Text("Время напоминаний")
-                        TimePickerRow(
-                            time = currentSettings.notificationTime,
-                            onTimeChange = {
-                                viewModel.updateSettings(currentSettings.copy(notificationTime = it))
+                        Spacer(modifier = Modifier.height(8.dp))
+                        
+                        // Получаем список времен и добавляем пустое поле если нужно
+                        val filledTimes = currentSettings.notificationTimes.filter { it.isNotBlank() }
+                        val maxFields = 5
+                        val timesToDisplay = filledTimes.toMutableList().apply {
+                            // Добавляем пустое поле если не достигнут максимум (n+1 полей)
+                            if (size < maxFields) {
+                                add("")
                             }
-                        )
+                        }
+                        
+                        timesToDisplay.forEachIndexed { index, time ->
+                            val isFilled = index < filledTimes.size
+                            TimePickerRow(
+                                time = if (isFilled) time else "Выберите время",
+                                onTimeChange = { newTime ->
+                                    val updatedTimes = filledTimes.toMutableList()
+                                    if (isFilled) {
+                                        // Обновляем существующее время
+                                        updatedTimes[index] = newTime
+                                    } else {
+                                        // Добавляем новое время
+                                        updatedTimes.add(newTime)
+                                    }
+                                    viewModel.updateSettings(
+                                        currentSettings.copy(notificationTimes = updatedTimes)
+                                    )
+                                },
+                                onRemove = if (isFilled && filledTimes.size > 1) {
+                                    {
+                                        val updatedTimes = filledTimes.toMutableList()
+                                        updatedTimes.removeAt(index)
+                                        viewModel.updateSettings(
+                                            currentSettings.copy(notificationTimes = updatedTimes)
+                                        )
+                                    }
+                                } else null
+                            )
+                        }
                     }
                 }
             }
