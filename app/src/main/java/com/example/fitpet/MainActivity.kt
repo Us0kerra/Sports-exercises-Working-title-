@@ -49,6 +49,7 @@ import com.example.fitpet.ui.statistics.StatisticsViewModel
 import com.example.fitpet.ui.warmups.WarmupDetailsScreen
 import com.example.fitpet.ui.warmups.WarmupsScreen
 import com.example.fitpet.ui.warmups.WarmupsViewModel
+import com.example.fitpet.ui.warmups.components.ExerciseScreen
 
 class MainActivity : AppCompatActivity() {
 
@@ -105,6 +106,8 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun FitPetApp() {
     val navController = rememberNavController()
+    val warmupsviewModel: WarmupsViewModel = viewModel() // один экземпляр
+
     Scaffold(
         bottomBar = {
             NavigationBar {
@@ -135,17 +138,23 @@ fun FitPetApp() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Warmups.route) {
-                val viewModel: WarmupsViewModel = viewModel()
-                WarmupsScreen(viewModel = viewModel, navController = navController)
+                WarmupsScreen(viewModel = warmupsviewModel, navController = navController)
+            }
+            composable("exercise") {
+                ExerciseScreen(
+                    viewModel = warmupsviewModel,
+                    navController = navController
+                )
             }
             composable(
                 route = Screen.WarmupDetails.routeWithArgs,
                 arguments = listOf(navArgument(Screen.WarmupDetails.warmupIdArg) { type = NavType.StringType })
             ) { backStackEntry ->
+
                 val warmupId = backStackEntry.arguments?.getString(Screen.WarmupDetails.warmupIdArg)
                 val warmup = WarmupRepository.getWarmupById(warmupId)
                 if (warmup != null) {
-                    WarmupDetailsScreen(warmup = warmup, navController = navController)
+                    WarmupDetailsScreen(warmup = warmup, navController = navController,viewModel = warmupsviewModel)
                 }
             }
             composable(Screen.Achievements.route) {

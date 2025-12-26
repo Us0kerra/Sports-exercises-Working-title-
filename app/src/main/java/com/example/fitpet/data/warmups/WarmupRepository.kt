@@ -12,8 +12,8 @@ class WarmupRepository {
         private val exercises = listOf(
             Exercise(
                 id = "1",
-                name = "Neck Stretch",
-                description = "Gently tilt your head from side to side.",
+                name = "Растяжка шеи",
+                description = "Аккуратно наклоняйте голову из стороны в сторону.",
                 durationSeconds = 30,
                 repetitions = 5,
                 imageRes = R.drawable.cat_base,
@@ -21,8 +21,8 @@ class WarmupRepository {
             ),
             Exercise(
                 id = "2",
-                name = "Shoulder Rolls",
-                description = "Roll your shoulders forwards and backwards.",
+                name = "Вращение плеч",
+                description = "Вращайте плечи вперёд и назад.",
                 durationSeconds = 30,
                 repetitions = 10,
                 imageRes = R.drawable.cat_base,
@@ -30,8 +30,8 @@ class WarmupRepository {
             ),
             Exercise(
                 id = "3",
-                name = "Cat-Cow Stretch",
-                description = "Alternate between arching and rounding your back.",
+                name = "Растяжка 'Кошка-Корова'",
+                description = "Чередуйте прогиб и округление спины.",
                 durationSeconds = 60,
                 repetitions = 10,
                 imageRes = R.drawable.cat_base,
@@ -105,8 +105,8 @@ class WarmupRepository {
         private val warmups = listOf(
             Warmup(
                 id = "1",
-                name = "Full Body Stretching",
-                description = "A complete stretching routine for the whole body.",
+                name = "Разминка для всего тела",
+                description = "Полный комплекс растяжки для всего тела.",
                 type = WarmupType.GENERAL,
                 exercises = exercises.slice(0..3)
             ),

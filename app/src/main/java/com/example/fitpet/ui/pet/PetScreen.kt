@@ -229,13 +229,6 @@ fun CreatePetScreen(
                 isSelected = uiState.petType == PetType.GREEN,
                 onClick = { onPetSelected(PetType.GREEN) }
             )
-
-            PetCard(
-                title = "Orange Pet",
-                color = Color(0xFFF97316),
-                isSelected = uiState.petType == PetType.ORANGE,
-                onClick = { onPetSelected(PetType.ORANGE) }
-            )
         }
 
         Spacer(modifier = Modifier.height(24.dp))
