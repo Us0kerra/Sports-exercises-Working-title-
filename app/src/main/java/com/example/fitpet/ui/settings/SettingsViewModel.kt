@@ -33,20 +33,14 @@ class SettingsViewModel(private val repository: SettingsRepository) : ViewModel(
         viewModelScope.launch {
             repository.updateSettings(newSettings)
 
-            // Обновляем запланированное напоминание при изменении настроек
-            if (newSettings.notifications) {
-                val (hour, minute) = newSettings.notificationTime.split(":").let {
-                    val h = it.getOrNull(0)?.toIntOrNull() ?: 9
-                    val m = it.getOrNull(1)?.toIntOrNull() ?: 0
-                    h to m
-                }
-                NotificationScheduler.scheduleDailyReminder(
+            // Обновляем запланированные напоминания при изменении настроек
+            if (newSettings.notifications && newSettings.notificationTimes.isNotEmpty()) {
+                NotificationScheduler.scheduleDailyReminders(
                     context = repository.context,
-                    hour = hour,
-                    minute = minute
+                    times = newSettings.notificationTimes
                 )
             } else {
-                NotificationScheduler.cancelDailyReminder(repository.context)
+                NotificationScheduler.cancelAllDailyReminders(repository.context)
             }
         }
     }

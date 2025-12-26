@@ -6,11 +6,13 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.fitpet.data.repository.SettingsRepository
+import com.example.fitpet.notifications.NotificationScheduler
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import androidx.lifecycle.lifecycleScope
 import androidx.core.content.ContextCompat
 import androidx.core.app.ActivityCompat
+import kotlinx.coroutines.launch
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -56,9 +58,19 @@ class MainActivity : AppCompatActivity() {
 
         requestNotificationPermissionIfNeeded()
 
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Подписываемся на изменения настроек
         val settingsRepository = SettingsRepository(applicationContext)
+        
+        // Создаем канал уведомлений при запуске
+        NotificationScheduler.createNotificationChannel(applicationContext)
+        
         settingsRepository.settingsFlow
             .onEach { settings ->
+                // Переключаем светлую/тёмную тему
                 val mode = if (settings.darkMode) {
                     AppCompatDelegate.MODE_NIGHT_YES
                 } else {
@@ -66,6 +78,14 @@ class MainActivity : AppCompatActivity() {
                 }
                 if (AppCompatDelegate.getDefaultNightMode() != mode) {
                     AppCompatDelegate.setDefaultNightMode(mode)
+                }
+                
+                // Инициализируем уведомления при запуске приложения
+                if (settings.notifications && settings.notificationTimes.isNotEmpty()) {
+                    NotificationScheduler.scheduleDailyReminders(
+                        applicationContext,
+                        settings.notificationTimes
+                    )
                 }
             }
             .launchIn(lifecycleScope)

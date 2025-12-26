@@ -5,6 +5,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,11 +24,21 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun TimePickerRow(
     time: String,
-    onTimeChange: (String) -> Unit
+    onTimeChange: (String) -> Unit,
+    onRemove: (() -> Unit)? = null
 ) {
     var showDialog by remember { mutableStateOf(false) }
-    val hour = time.substringBefore(":").toIntOrNull() ?: 9
-    val minute = time.substringAfter(":").toIntOrNull() ?: 0
+    val isTimeValid = time.contains(":") && time != "Выберите время"
+    val hour = if (isTimeValid) {
+        time.substringBefore(":").toIntOrNull() ?: 9
+    } else {
+        9
+    }
+    val minute = if (isTimeValid) {
+        time.substringAfter(":").toIntOrNull() ?: 0
+    } else {
+        0
+    }
     val context = LocalContext.current
 
     Row(
@@ -34,9 +48,9 @@ fun TimePickerRow(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         Box(
             modifier = Modifier
+                .weight(1f)
                 .clickable { showDialog = true }
                 .border(
                     width = 1.dp,
@@ -45,7 +59,24 @@ fun TimePickerRow(
                 )
                 .padding(horizontal = 12.dp, vertical = 6.dp)
         ) {
-            Text(time)
+            Text(
+                text = time,
+                color = if (isTimeValid) Color.Unspecified else Color.Gray
+            )
+        }
+        
+        if (onRemove != null && isTimeValid) {
+            Spacer(modifier = Modifier.width(8.dp))
+            IconButton(
+                onClick = onRemove,
+                modifier = Modifier.size(40.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Удалить",
+                    tint = Color.Gray
+                )
+            }
         }
     }
 
