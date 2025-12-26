@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.fitpet.data.warmups.Warmup
+import java.util.concurrent.TimeUnit
 
 
 @Composable
@@ -34,49 +35,51 @@ fun WarmupCard(
     warmup: Warmup,
     onPlayClick: () -> Unit
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp)
-    ) {
-        Row(
-            modifier = Modifier.padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
+    val durationInMinutes = TimeUnit.SECONDS.toMinutes(
+        warmup.exercises.sumOf { it.durationSeconds + it.restSeconds }.toLong()
+    )
+    if (warmup.exercises.isNotEmpty()) { // safety check
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp)
         ) {
-
-            Image(
-                painter = painterResource(warmup.imageRes),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(64.dp)
-                    .clip(RoundedCornerShape(12.dp))
-            )
-
-            Spacer(Modifier.width(12.dp))
-
-            Column(modifier = Modifier.weight(1f)) {
-                Text(warmup.title, fontWeight = FontWeight.Bold)
-                Text(
-                    "${warmup.type.title} • ${warmup.durationMinutes} мин • ${warmup.exercisesCount} упражнений",
-                    fontSize = 12.sp,
-                    color = Color.Gray
-                )
-
-                DifficultyBadge(warmup.difficulty)
-            }
-
-            IconButton(
-                onClick = onPlayClick,
-                modifier = Modifier
-                    .size(40.dp)
-                    .background(Color(0xFF9810FA), CircleShape)
+            Row(
+                modifier = Modifier.padding(12.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = Icons.Default.PlayArrow,
+
+                Image(
+                    painter = painterResource(warmup.exercises.first().imageRes),
                     contentDescription = null,
-                    tint = Color.White
+                    modifier = Modifier
+                        .size(64.dp)
+                        .clip(RoundedCornerShape(12.dp))
                 )
+
+                Spacer(Modifier.width(12.dp))
+
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(warmup.name, fontWeight = FontWeight.Bold)
+                    Text(
+                        "${warmup.type.title} • $durationInMinutes мин • ${warmup.exercises.size} упражнений",
+                        fontSize = 12.sp,
+                        color = Color.Gray
+                    )
+                }
+
+                IconButton(
+                    onClick = onPlayClick,
+                    modifier = Modifier
+                        .size(40.dp)
+                        .background(Color(0xFF9810FA), CircleShape)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.PlayArrow,
+                        contentDescription = null,
+                        tint = Color.White
+                    )
+                }
             }
         }
     }
 }
-

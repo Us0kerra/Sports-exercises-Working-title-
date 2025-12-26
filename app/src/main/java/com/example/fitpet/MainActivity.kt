@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.onEach
 import androidx.lifecycle.lifecycleScope
 import androidx.core.content.ContextCompat
 import androidx.core.app.ActivityCompat
-import kotlinx.coroutines.launch
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -57,10 +56,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         requestNotificationPermissionIfNeeded()
-
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         // Подписываемся на изменения настроек
         val settingsRepository = SettingsRepository(applicationContext)
@@ -150,7 +145,7 @@ fun FitPetApp() {
                 val warmupId = backStackEntry.arguments?.getString(Screen.WarmupDetails.warmupIdArg)
                 val warmup = WarmupRepository.getWarmupById(warmupId)
                 if (warmup != null) {
-                    WarmupDetailsScreen(warmup = warmup)
+                    WarmupDetailsScreen(warmup = warmup, navController = navController)
                 }
             }
             composable(Screen.Achievements.route) {

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class WarmupsViewModel() : ViewModel() {
+class WarmupsViewModel : ViewModel() {
     private val repository = WarmupRepository()
 
     private val _selectedType = MutableStateFlow(WarmupType.ALL)
@@ -18,7 +18,7 @@ class WarmupsViewModel() : ViewModel() {
     val warmups: StateFlow<List<Warmup>> = _warmups.asStateFlow()
 
     init {
-        _warmups.value = repository.getWarmups() // <-- если метод обычный List
+        _warmups.value = repository.getWarmups()
     }
 
     fun selectType(type: WarmupType) {
