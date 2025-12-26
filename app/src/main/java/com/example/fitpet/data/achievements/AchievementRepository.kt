@@ -40,7 +40,7 @@ object AchievementsRepository {
     )
 
     fun getAchievements(): List<Achievement> {
-        return achievements
+        return achievements.toList()
     }
 
     fun claimAchievement(id: Int) {

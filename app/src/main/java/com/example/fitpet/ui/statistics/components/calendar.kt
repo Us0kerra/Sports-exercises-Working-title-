@@ -48,12 +48,6 @@ fun Calendar(
 
     Spacer(Modifier.height(16.dp))
 
-//    Text(
-//        text = "Декабрь 2025",
-//        modifier = Modifier.align(Alignment.Start),
-//        fontWeight = FontWeight.Medium
-//    )
-
     Spacer(Modifier.height(12.dp))
 
     CalendarGrid(

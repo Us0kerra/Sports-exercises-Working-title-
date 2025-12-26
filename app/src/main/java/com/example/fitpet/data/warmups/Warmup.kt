@@ -7,5 +7,6 @@ data class Warmup(
     val durationMinutes: Int,
     val exercisesCount: Int,
     val difficulty: Difficulty,
-    val imageRes: Int
+    val imageRes: Int,
+    val exercises: List<Exercise>
 )
