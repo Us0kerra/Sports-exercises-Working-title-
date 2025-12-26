@@ -32,6 +32,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.fitpet.data.PetViewModelFactory
 import com.example.fitpet.data.warmups.WarmupRepository
 import com.example.fitpet.ui.Screen
 import com.example.fitpet.ui.achievements.AchievementsScreen
@@ -137,8 +138,14 @@ fun FitPetApp() {
                 AchievementsScreen(viewModel)
             }
             composable(Screen.Pet.route) {
-                val viewModel: PetViewModel = viewModel()
-                PetScreen(viewModel)
+                val context = LocalContext.current
+                val repository = (context.applicationContext as FitPetApplication).petRepository
+                val factory = PetViewModelFactory(repository)
+                val viewModel: PetViewModel = viewModel(factory = factory)
+                PetScreen(
+                    viewModel = viewModel,
+                    onNavigateToWarmups = { navController.navigate(Screen.Warmups.route) }
+                )
             }
             composable(Screen.Statistics.route) {
                 val viewModel: StatisticsViewModel = viewModel()
