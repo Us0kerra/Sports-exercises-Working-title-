@@ -2,9 +2,8 @@ package com.example.fitpet.data.warmups
 
 enum class WarmupType(val title: String) {
     ALL("Все"),
-    GENERAL("Общие"),
+    GENERAL("Общая"),
     NECK("Шея"),
-    BACK("Спина"),
-    ARMS("Руки"),
+    HANDS("Руки"),
     LEGS("Ноги")
 }

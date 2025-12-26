@@ -16,13 +16,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.fitpet.data.warmups.Warmup
 import com.example.fitpet.data.warmups.WarmupType
+import com.example.fitpet.ui.Screen
 import com.example.fitpet.ui.warmups.components.WarmupCard
 import com.example.fitpet.ui.warmups.components.CategorySlider
 
 @Composable
-fun WarmupsScreen(viewModel: WarmupsViewModel
+fun WarmupsScreen(
+    viewModel: WarmupsViewModel,
+    navController: NavController
 ) {
     val selectedType by viewModel.selectedType.collectAsState()
     val warmups:List<Warmup> by viewModel.warmups.collectAsState()
@@ -64,7 +68,7 @@ fun WarmupsScreen(viewModel: WarmupsViewModel
                 WarmupCard(
                     warmup = warmup,
                     onPlayClick = {
-                        // TODO: запуск разминки
+                        navController.navigate(Screen.WarmupDetails.createRoute(warmup.id))
                     }
                 )
             }
