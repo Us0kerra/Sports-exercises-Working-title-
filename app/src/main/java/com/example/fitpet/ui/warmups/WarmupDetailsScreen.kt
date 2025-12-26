@@ -65,7 +65,8 @@ fun WarmupDetailsScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)) {
             items(warmup.exercises) { exercise ->
                 ExerciseCard(exercise = exercise) {
-                    viewModel.selectExercise(exercise)
+                    // Запускаем программу тренировок с выбранного упражнения
+                    viewModel.startWarmupFromExercise(warmup, exercise)
                     navController.navigate("exercise")
                 }
             }

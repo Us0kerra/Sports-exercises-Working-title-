@@ -17,7 +17,8 @@ class WarmupRepository {
                 durationSeconds = 30,
                 repetitions = 5,
                 imageRes = R.drawable.cat_base,
-                restSeconds = 10
+                restSeconds = 10,
+                caloriesPerMinute = 3
             ),
             Exercise(
                 id = "2",
@@ -26,7 +27,8 @@ class WarmupRepository {
                 durationSeconds = 30,
                 repetitions = 10,
                 imageRes = R.drawable.cat_base,
-                restSeconds = 10
+                restSeconds = 10,
+                caloriesPerMinute = 4
             ),
             Exercise(
                 id = "3",
@@ -35,7 +37,8 @@ class WarmupRepository {
                 durationSeconds = 60,
                 repetitions = 10,
                 imageRes = R.drawable.cat_base,
-                restSeconds = 10
+                restSeconds = 10,
+                caloriesPerMinute = 5
             ),
             Exercise(
                 id = "4",
@@ -44,7 +47,8 @@ class WarmupRepository {
                 durationSeconds = 60,
                 repetitions = 3,
                 imageRes = R.drawable.cat_base,
-                restSeconds = 15
+                restSeconds = 15,
+                caloriesPerMinute = 6
             ),
             Exercise(
                 id = "5",
@@ -53,7 +57,8 @@ class WarmupRepository {
                 durationSeconds = 60,
                 repetitions = 20,
                 imageRes = R.drawable.cat_base,
-                restSeconds = 15
+                restSeconds = 15,
+                caloriesPerMinute = 10
             ),
             Exercise(
                 id = "6",
@@ -62,7 +67,8 @@ class WarmupRepository {
                 durationSeconds = 60,
                 repetitions = 20,
                 imageRes = R.drawable.cat_base,
-                restSeconds = 15
+                restSeconds = 15,
+                caloriesPerMinute = 9
             ),
             Exercise(
                 id = "7",
@@ -71,7 +77,8 @@ class WarmupRepository {
                 durationSeconds = 60,
                 repetitions = 20,
                 imageRes = R.drawable.cat_base,
-                restSeconds = 15
+                restSeconds = 15,
+                caloriesPerMinute = 8
             ),
             Exercise(
                 id = "8",
@@ -80,7 +87,8 @@ class WarmupRepository {
                 durationSeconds = 60,
                 repetitions = 15,
                 imageRes = R.drawable.cat_base,
-                restSeconds = 20
+                restSeconds = 20,
+                caloriesPerMinute = 7
             ),
             Exercise(
                 id = "9",
@@ -89,7 +97,8 @@ class WarmupRepository {
                 durationSeconds = 60,
                 repetitions = 10,
                 imageRes = R.drawable.cat_base,
-                restSeconds = 20
+                restSeconds = 20,
+                caloriesPerMinute = 8
             ),
             Exercise(
                 id = "10",
@@ -98,7 +107,8 @@ class WarmupRepository {
                 durationSeconds = 30,
                 repetitions = 10,
                 imageRes = R.drawable.cat_base,
-                restSeconds = 10
+                restSeconds = 10,
+                caloriesPerMinute = 4
             )
         )
 

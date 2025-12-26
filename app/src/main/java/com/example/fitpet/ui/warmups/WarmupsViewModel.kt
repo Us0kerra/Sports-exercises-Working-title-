@@ -38,4 +38,51 @@ class WarmupsViewModel : ViewModel() {
     fun selectExercise(exercise: Exercise) {
         _selectedExercise.value = exercise
     }
+
+    // Состояние текущей программы тренировок
+    private val _currentWarmup = mutableStateOf<Warmup?>(null)
+    var currentWarmup: Warmup? by _currentWarmup
+        private set
+
+    // Индекс текущего упражнения в программе
+    private val _currentExerciseIndex = mutableStateOf(0)
+    var currentExerciseIndex: Int by _currentExerciseIndex
+        private set
+
+    // Начать программу тренировок
+    fun startWarmup(warmup: Warmup) {
+        _currentWarmup.value = warmup
+        _currentExerciseIndex.value = 0
+        if (warmup.exercises.isNotEmpty()) {
+            _selectedExercise.value = warmup.exercises[0]
+        }
+    }
+
+    // Начать программу тренировок с определенного упражнения
+    fun startWarmupFromExercise(warmup: Warmup, exercise: Exercise) {
+        _currentWarmup.value = warmup
+        val exerciseIndex = warmup.exercises.indexOf(exercise)
+        _currentExerciseIndex.value = if (exerciseIndex >= 0) exerciseIndex else 0
+        _selectedExercise.value = if (exerciseIndex >= 0) exercise else warmup.exercises.firstOrNull()
+    }
+
+    // Перейти к следующему упражнению
+    fun moveToNextExercise(): Boolean {
+        val warmup = _currentWarmup.value ?: return false
+        val nextIndex = _currentExerciseIndex.value + 1
+        
+        if (nextIndex < warmup.exercises.size) {
+            _currentExerciseIndex.value = nextIndex
+            _selectedExercise.value = warmup.exercises[nextIndex]
+            return true
+        }
+        return false
+    }
+
+    // Сбросить состояние тренировки
+    fun resetWorkout() {
+        _currentWarmup.value = null
+        _currentExerciseIndex.value = 0
+        _selectedExercise.value = null
+    }
 }
