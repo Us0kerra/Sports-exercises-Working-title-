@@ -1,36 +1,42 @@
 package com.example.fitpet.ui.statistics
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.fitpet.data.statistics.StatisticsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-
-data class DayStat(
-    val calories: Int,
-    val minutes: Int,
-    val workouts: Int,
-    val completedDays: Set<Int>,
-    val selectedDay: Int,
-    val streak: Int
-)
+import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.YearMonth
 
 class StatisticsViewModel : ViewModel() {
 
-    private val _state = MutableStateFlow(
-        DayStat(
-            calories = 320,
-            minutes = 45,
-            workouts = 3,
-            completedDays = setOf(1, 2, 5, 7, 8, 9),
-            selectedDay = 10,
-            streak = 3
-        )
-    )
+    private val _state = MutableStateFlow(StatisticsState())
     val state = _state.asStateFlow()
 
-    fun onDaySelected(day: Int) {
-        _state.update { it.copy(selectedDay = day) }
+    init {
+        loadStatisticsForMonth(YearMonth.now())
+    }
+
+    fun onDateSelected(date: LocalDate) {
+        _state.update { it.copy(selectedDate = date) }
+    }
+
+    fun onMonthChanged(month: YearMonth) {
+        loadStatisticsForMonth(month)
+    }
+
+    private fun loadStatisticsForMonth(month: YearMonth) {
+        viewModelScope.launch {
+            val stats = StatisticsRepository.getStatisticsForMonth(month)
+            _state.update { currentState ->
+                val currentSelectedDay = currentState.selectedDate.dayOfMonth
+                val lastDayOfNewMonth = month.lengthOfMonth()
+                val newDay = minOf(currentSelectedDay, lastDayOfNewMonth)
+                val newSelectedDate = month.atDay(newDay)
+                stats.copy(selectedDate = newSelectedDate)
+            }
+        }
     }
 }
