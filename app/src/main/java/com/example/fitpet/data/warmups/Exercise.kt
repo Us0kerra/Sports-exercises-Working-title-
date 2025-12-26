@@ -7,5 +7,6 @@ data class Exercise(
     val durationSeconds: Int,
     val repetitions: Int,
     val imageRes: Int,
-    val restSeconds: Int
+    val restSeconds: Int,
+    val caloriesPerMinute: Int = 0
 )

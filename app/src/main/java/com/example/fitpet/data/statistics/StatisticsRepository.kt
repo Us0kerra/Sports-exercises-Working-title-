@@ -1,6 +1,7 @@
 package com.example.fitpet.data.statistics
 
 import com.example.fitpet.ui.statistics.StatisticsState
+import java.time.LocalDate
 import java.time.YearMonth
 import kotlin.random.Random
 
@@ -21,5 +22,20 @@ object StatisticsRepository {
                 currentMonth = month
             )
         }
+    }
+
+    fun addWorkout(calories: Int, minutes: Int) {
+        val today = LocalDate.now()
+        val month = YearMonth.from(today)
+        val currentState = getStatisticsForMonth(month)
+        
+        val updatedState = currentState.copy(
+            calories = currentState.calories + calories,
+            minutes = currentState.minutes + minutes,
+            workouts = currentState.workouts + 1,
+            completedDays = currentState.completedDays + today.dayOfMonth
+        )
+        
+        cache[month] = updatedState
     }
 }
