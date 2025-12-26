@@ -6,17 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import com.example.fitpet.data.warmups.WarmupRepository
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 
 class WarmupsFragment : Fragment() {
 
-    private lateinit var viewModel: WarmupsViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        viewModel = WarmupsViewModel()
-    }
+    private val viewModel: WarmupsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,7 +20,7 @@ class WarmupsFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                WarmupsScreen(viewModel)
+                WarmupsScreen(viewModel = viewModel, navController = findNavController())
             }
         }
     }

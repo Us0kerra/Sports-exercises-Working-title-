@@ -4,35 +4,38 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.fitpet.data.repository.SettingsRepository
-import com.example.fitpet.databinding.FragmentPetBinding
-import com.example.fitpet.ui.settings.SettingsScreen
-import com.example.fitpet.ui.settings.SettingsViewModel
+import androidx.navigation.fragment.findNavController
+import com.example.fitpet.FitPetApplication
+import com.example.fitpet.R
+import com.example.fitpet.data.PetViewModelFactory
 
 class PetFragment : Fragment() {
-
 
     private lateinit var viewModel: PetViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Создаём репозиторий, передаём контекст
-//        val repository = SettingsRepository(requireContext())
-
-        // Создаём ViewModel, передаём репозиторий
-        viewModel = PetViewModel()
+        val application = requireActivity().application as FitPetApplication
+        val repository = application.petRepository
+        val factory = PetViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, factory)[PetViewModel::class.java]
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                PetScreen(viewModel)
+                PetScreen(
+                    viewModel = viewModel,
+                    onNavigateToWarmups = {
+                        findNavController().navigate(R.id.navigation_warmups)
+                    }
+                )
             }
         }
     }

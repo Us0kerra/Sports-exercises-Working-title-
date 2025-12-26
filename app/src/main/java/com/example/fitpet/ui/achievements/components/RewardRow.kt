@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,33 +16,33 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.fitpet.data.achievements.Achievement
+import com.example.fitpet.data.achievements.AchievementStatus
 
 @Composable
-fun RewardRow(achievement: Achievement) {
+fun RewardRow(achievement: Achievement, onClaimReward: () -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             painter = painterResource(achievement.rewardIcon),
             contentDescription = null,
-            tint = Color(0xFFFFC107),
-            modifier = Modifier.size(18.dp)
+            tint = Color(0xFF3B82F6),
+            modifier = Modifier.size(24.dp)
         )
 
-        Spacer(Modifier.width(6.dp))
+        Spacer(Modifier.width(8.dp))
 
         Text(
-            text = "Награда:",
-            fontSize = 12.sp,
-            color = Color.Gray
-        )
-
-        Spacer(Modifier.width(4.dp))
-
-        Text(
-            text = achievement.rewardName,
-            fontSize = 12.sp,
+            text = "Награда: ${achievement.rewardName}",
+            fontSize = 14.sp,
             fontWeight = FontWeight.Medium
         )
+
+        if (achievement.status == AchievementStatus.DONE_NOT_CLAIMED) {
+            Spacer(Modifier.weight(1f))
+            Button(onClick = onClaimReward) {
+                Text("Забрать")
+            }
+        }
     }
 }

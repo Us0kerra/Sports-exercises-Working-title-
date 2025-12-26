@@ -6,10 +6,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.example.fitpet.ui.statistics.DayStat
+import com.example.fitpet.ui.statistics.StatisticsState
 
 @Composable
-fun StatsRow(state: DayStat) {
+fun StatsRow(state: StatisticsState) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
@@ -19,4 +19,3 @@ fun StatsRow(state: DayStat) {
         StatCard("🏋️", state.workouts, "Тренировки", Color(0xFFF0F9FF))
     }
 }
-

@@ -36,39 +36,38 @@ fun AchievementCard(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = cardColor)
     ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier.padding(16.dp)
         ) {
-            AchievementIcon(achievement.typeIcon, achievement.status)
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                AchievementIcon(achievement.typeIcon, achievement.status)
 
-            Spacer(modifier = Modifier.width(12.dp))
+                Spacer(modifier = Modifier.width(12.dp))
 
-            Column(modifier = Modifier.weight(1f)) {
-                TitleRow(achievement,onClaimReward)
-                Text(
-                    text = achievement.description,
-                    fontSize = 12.sp
-                )
+                Column(modifier = Modifier.weight(1f)) {
+                    TitleRow(achievement)
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = achievement.description,
+                        fontSize = 12.sp
+                    )
+                }
             }
 
-            Spacer(modifier = Modifier.width(8.dp))
-
-            RewardRow(achievement)
-        }
-        if (achievement.status == AchievementStatus.NOT_DONE) {
             Spacer(Modifier.height(12.dp))
-            Text(
-                text = "Награда",
-                fontSize = 12.sp,
-                modifier = Modifier.padding(6.dp)
-            )
-            LinearProgressIndicator(
-                progress = { achievement.progress },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(6.dp)
-            )
+
+            if (achievement.status == AchievementStatus.NOT_DONE) {
+                LinearProgressIndicator(
+                    progress = { achievement.progress },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(6.dp)
+                )
+            } else {
+                RewardRow(achievement = achievement, onClaimReward = onClaimReward)
+            }
         }
     }
 }

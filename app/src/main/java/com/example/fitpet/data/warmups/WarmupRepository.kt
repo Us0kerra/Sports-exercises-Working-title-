@@ -13,8 +13,8 @@ class WarmupRepository {
             durationMinutes = 10,
             exercisesCount = 6,
             difficulty = Difficulty.BEGINNER,
-//            imageRes = R.drawable.warmup_general #TODO: Иконки разминок
-            imageRes = R.drawable.ic_pet_black_24dp
+            imageRes = R.drawable.ic_pet_black_24dp,
+            exercises = listOf()
         ),
         Warmup(
             id = "2",
@@ -23,10 +23,16 @@ class WarmupRepository {
             durationMinutes = 7,
             exercisesCount = 5,
             difficulty = Difficulty.MEDIUM,
-//            imageRes = R.drawable.warmup_neck
-            imageRes = R.drawable.ic_pet_black_24dp
+            imageRes = R.drawable.ic_pet_black_24dp,
+            exercises = listOf()
         )
-        // дальше расширяешь
     )
 }
+    companion object {
+        private val warmups = WarmupRepository().getWarmups()
+
+        fun getWarmupById(id: String?): Warmup? {
+            return warmups.find { it.id == id }
+        }
+    }
 }
