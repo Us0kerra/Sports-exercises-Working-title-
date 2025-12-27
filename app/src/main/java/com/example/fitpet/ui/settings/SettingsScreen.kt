@@ -172,24 +172,6 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
                 }
             }
 
-            // Озвучивание упражнений
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 4.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F0F0))
-            ) {
-                Column(modifier = Modifier.padding(12.dp)) {
-                    SettingSwitch(
-                        title = "Озвучивание упражнений",
-                        checked = currentSettings.sound,
-                        onCheckedChange = {
-                            viewModel.updateSettings(currentSettings.copy(sound = it))
-                        }
-                    )
-                }
-            }
-
             Spacer(Modifier.height(24.dp))
 
             // ===== Параметры для расчета калорий =====
