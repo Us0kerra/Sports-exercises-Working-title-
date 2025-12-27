@@ -149,7 +149,6 @@ fun ExerciseScreen(
                 
                 // Сбрасываем состояние тренировки
                 //startIndex.value = -1
-                viewModel.resetWorkout()
             }
         }
     }
@@ -246,6 +245,17 @@ fun ExerciseScreen(
                 }
             }
         }
+        LaunchedEffect(state) {
+            if (state == ExerciseState.COMPLETED) {
+                navController.navigate("navigation_warmups") {
+                    popUpTo(navController.graph.startDestinationId) {
+                        inclusive = false
+                    }
+                    launchSingleTop = true
+                }
+            }
+        }
+
     }
 }
 

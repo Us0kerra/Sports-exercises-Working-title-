@@ -140,6 +140,9 @@ fun FitPetApp() {
             composable(Screen.Warmups.route) {
                 WarmupsScreen(viewModel = warmupsviewModel, navController = navController)
             }
+            composable("navigation_warmups"){
+                WarmupsScreen(viewModel = warmupsviewModel, navController = navController)
+            }
             composable("exercise") {
                 ExerciseScreen(
                     viewModel = warmupsviewModel,

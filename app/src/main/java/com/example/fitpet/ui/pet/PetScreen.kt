@@ -214,7 +214,7 @@ fun CreatePetScreen(
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceAround
         ) {
             PetCard(
                 title = "Кошка",

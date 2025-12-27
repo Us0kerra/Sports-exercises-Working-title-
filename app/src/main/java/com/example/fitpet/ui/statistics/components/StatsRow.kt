@@ -12,7 +12,7 @@ import com.example.fitpet.ui.statistics.StatisticsState
 fun StatsRow(state: StatisticsState) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceAround
     ) {
         StatCard("🔥", state.calories, "ккал", Color(0xFFFDF2F8))
         StatCard("⏱", state.minutes, "мин.", Color(0xFFFFF7ED))
