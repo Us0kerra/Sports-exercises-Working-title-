@@ -16,8 +16,8 @@ class WarmupRepository {
                 description = "Аккуратно наклоняйте голову из стороны в сторону.",
                 durationSeconds = 30,
                 repetitions = 5,
-                imageRes = R.drawable.cat_base,
-                restSeconds = 10,
+                imageRes = R.drawable.all,
+                restSeconds = 5,
                 caloriesPerMinute = 3
             ),
             Exercise(
@@ -26,8 +26,8 @@ class WarmupRepository {
                 description = "Вращайте плечи вперёд и назад.",
                 durationSeconds = 30,
                 repetitions = 10,
-                imageRes = R.drawable.cat_base,
-                restSeconds = 10,
+                imageRes = R.drawable.all,
+                restSeconds = 5,
                 caloriesPerMinute = 4
             ),
             Exercise(
@@ -36,8 +36,8 @@ class WarmupRepository {
                 description = "Чередуйте прогиб и округление спины.",
                 durationSeconds = 60,
                 repetitions = 10,
-                imageRes = R.drawable.cat_base,
-                restSeconds = 10,
+                imageRes = R.drawable.all,
+                restSeconds = 5,
                 caloriesPerMinute = 5
             ),
             Exercise(
@@ -46,8 +46,8 @@ class WarmupRepository {
                 description = "Растяжка всего тела, особенно задней поверхности бедра, голеней и плеч.",
                 durationSeconds = 60,
                 repetitions = 3,
-                imageRes = R.drawable.cat_base,
-                restSeconds = 15,
+                imageRes = R.drawable.all,
+                restSeconds = 5,
                 caloriesPerMinute = 6
             ),
             Exercise(
@@ -56,8 +56,8 @@ class WarmupRepository {
                 description = "Классическое кардио для повышения пульса.",
                 durationSeconds = 60,
                 repetitions = 20,
-                imageRes = R.drawable.cat_base,
-                restSeconds = 15,
+                imageRes = R.drawable.cardio,
+                restSeconds = 5,
                 caloriesPerMinute = 10
             ),
             Exercise(
@@ -66,8 +66,8 @@ class WarmupRepository {
                 description = "Отличная разминка для ног и корпуса.",
                 durationSeconds = 60,
                 repetitions = 20,
-                imageRes = R.drawable.cat_base,
-                restSeconds = 15,
+                imageRes = R.drawable.leg,
+                restSeconds = 5,
                 caloriesPerMinute = 9
             ),
             Exercise(
@@ -76,8 +76,8 @@ class WarmupRepository {
                 description = "Бег на месте с ударом пяткой по ягодицам, растягивает квадрицепсы.",
                 durationSeconds = 60,
                 repetitions = 20,
-                imageRes = R.drawable.cat_base,
-                restSeconds = 15,
+                imageRes = R.drawable.cardio,
+                restSeconds = 5,
                 caloriesPerMinute = 8
             ),
             Exercise(
@@ -86,8 +86,8 @@ class WarmupRepository {
                 description = "Базовое силовое упражнение для всей нижней части тела.",
                 durationSeconds = 60,
                 repetitions = 15,
-                imageRes = R.drawable.cat_base,
-                restSeconds = 20,
+                imageRes = R.drawable.leg,
+                restSeconds = 5,
                 caloriesPerMinute = 7
             ),
             Exercise(
@@ -96,8 +96,8 @@ class WarmupRepository {
                 description = "Эффективное упражнение для квадрицепсов, ягодиц и задней поверхности бедра.",
                 durationSeconds = 60,
                 repetitions = 10,
-                imageRes = R.drawable.cat_base,
-                restSeconds = 20,
+                imageRes = R.drawable.leg,
+                restSeconds = 5,
                 caloriesPerMinute = 8
             ),
             Exercise(
@@ -106,8 +106,8 @@ class WarmupRepository {
                 description = "Динамическая растяжка для разогрева бедер и задней поверхности бедра.",
                 durationSeconds = 30,
                 repetitions = 10,
-                imageRes = R.drawable.cat_base,
-                restSeconds = 10,
+                imageRes = R.drawable.leg,
+                restSeconds = 5,
                 caloriesPerMinute = 4
             )
         )
